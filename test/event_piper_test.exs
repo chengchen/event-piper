@@ -3,8 +3,8 @@ defmodule EventPiperTest do
   use ExUnit.Case
   doctest EventPiper
 
-  test "greets the world" do
-    assert EventPiper.hello() == :world
+  test "facts" do
+    assert 1 == 1
   end
 
 end
