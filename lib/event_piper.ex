@@ -1,7 +1,9 @@
 defmodule EventPiper do
 
   @moduledoc """
-  Documentation for `EventPiper`.
+  The service listens directly to PostgreSQL notification channel `new_events` and consume all the new events created in `events` table. The database
+  schema could be found in `postgresql/schema.sql` file. The service uses only 1 connection to digest all the notifications from PostgreSQL, and it
+  pipes the notifications to concerned live subscribers. It supports historical events replay.
   """
 
   use Application
