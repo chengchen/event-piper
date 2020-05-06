@@ -2,7 +2,8 @@
 
 The service listens directly to PostgreSQL notification channel `new_events` and consume all the new events created in `events` table. The database
 schema could be found in `postgresql/schema.sql` file. The service uses only 1 connection to digest all the notifications from PostgreSQL, and it
-pipes the notifications to concerned live subscribers. It supports historical events replay.
+pipes the notifications to concerned live subscribers. So if we scale the services to n instances and share the load, they would consume only n connections
+in normal usage (when on-demand historical events replay is not requested).
 
 ## To run it without Elixir or PostgreSQL
 
@@ -75,7 +76,7 @@ Now, if you have 2 sessions open for `toto`, and you insert another event into t
 ## TODO
 
 * Database schema is very primitive. If we prefer an append-only approach, we should add more fields to allow event patching.
-* The historical replay is using a PostgreSQL streaming approach, which could take long time if the number of events is huge.
+* The historical replay is using a PostgreSQL streaming approach, which could check out a connection for long time if the number of events is huge.
 * The notification connection is configured to be auto-reconnect in case of broken connection, but this could create some inconsistency between
 server side and client side states. Instead, we should immediately disconnect all the connected clients to make sure they don't miss events in between.
 * Not configurable, no CI, no tests at all.
