@@ -22,11 +22,12 @@ defmodule EventPiper.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:plug_cowboy, "~> 2.2.1"},
+      {:plug_cowboy, "~> 2.2"},
       {:pubsub, "~> 1.0"},
-      {:ecto_sql, "~> 3.4.3"},
-      {:postgrex, "~> 0.15.3"},
-      {:jason, "~> 1.2.0"}
+      {:ecto_sql, "~> 3.4"},
+      {:postgrex, "~> 0.15"},
+      {:jason, "~> 1.2"},
+      {:mint, "~> 1.0"}
     ]
   end
 end

@@ -31,4 +31,14 @@ defmodule EventPiper.Repo do
     )
   end
 
+  # Used for tests only
+  def insert_event!(subscriber, payload) do
+    insert!(%Event{type: "insert", timestamp: DateTime.utc_now(), subscriber: subscriber, payload: payload})
+  end
+
+  # Used for tests only
+  def reset_all! do
+    query("TRUNCATE TABLE events RESTART IDENTITY")
+  end
+
 end

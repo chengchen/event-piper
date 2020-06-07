@@ -3,6 +3,6 @@ import Config
 config :event_piper,
        ecto_repos: [EventPiper.Repo]
 
-config :event_piper, EventPiper.Repo,
-       url: "ecto://event_piper:event_piper@postgresql/event_piper",
-       auto_reconnect: true
+# Import environment specific config. This must remain at the bottom
+# of this file so it overrides the configuration defined above.
+import_config "#{Mix.env()}.exs"

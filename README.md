@@ -5,13 +5,17 @@ schema could be found in `postgresql/schema.sql` file. The service uses only 1 c
 pipes the notifications to concerned live subscribers. So if we scale the services to n instances and share the load, they would consume only n connections
 in normal usage (when on-demand historical events replay is not requested).
 
-## To run it without Elixir or PostgreSQL
+## Build and run tests
 
 ```
-$ docker-compose up
+$ make build
 ```
 
-(You might see some connection errors because the service starts much faster than PostgreSQL..)
+## To run it without Elixir or PostgreSQL (need to run `make build` first)
+
+```
+$ make run
+```
 
 ## Use the PUSH API
 
@@ -77,7 +81,3 @@ Now, if you have 2 sessions open for `toto`, and you insert another event into t
 
 * Database schema is very primitive. If we prefer an append-only approach, we should add more fields to allow event patching.
 * The historical replay is using a PostgreSQL streaming approach, which could check out a connection for long time if the number of events is huge.
-* The notification connection is configured to be auto-reconnect in case of broken connection, but this could create some inconsistency between
-server side and client side states. Instead, we should immediately disconnect all the connected clients to make sure they don't miss events in between.
-* Not configurable, no CI, no tests at all.
-* Dockerfile is not properly done (should use proper mix release).

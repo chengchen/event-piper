@@ -5,10 +5,10 @@ defmodule EventPiper.Event do
 
   @derive {Jason.Encoder, only: [:id, :type, :timestamp, :subscriber, :payload]}
   schema "events" do
-    field :type,       :string      , null: false
-    field :timestamp,  :utc_datetime, null: false
-    field :subscriber, :string      , null: false
-    field :payload,    :map         , null: false
+    field :type,       :string           , null: false
+    field :timestamp,  :utc_datetime_usec, null: false
+    field :subscriber, :string           , null: false
+    field :payload,    :map              , null: false
   end
 
   def changeset(event, attrs \\ %{}) do
