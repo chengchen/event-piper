@@ -75,9 +75,24 @@ data: {"foo":"bar"}
 ...
 ```
 
+## Java client example (with Reactor)
+
+```java
+WebClient client = WebClient.create("http://localhost:4000");
+ParameterizedTypeReference<ServerSentEvent<String>> type = new ParameterizedTypeReference<ServerSentEvent<String>>() {};
+
+Flux<ServerSentEvent<String>> eventStream = client.get()
+    .uri("/events")
+    .header("X-Consumer-Id", "toto")
+    .header("Last-Event-Id", "4")
+    .retrieve()
+    .bodyToFlux(type);
+```
+
 Now, if you have 2 sessions open for `toto`, and you insert another event into the database, you should see the pushed event in both.
 
 ## TODO
 
 * Database schema is very primitive. If we prefer an append-only approach, we should add more fields to allow event patching.
+* Complete CI + proper config management
 * The historical replay is using a PostgreSQL streaming approach, which could check out a connection for long time if the number of events is huge.

@@ -9,6 +9,8 @@ defmodule EventPiper.Repo do
   alias EventPiper.Event
   alias Postgrex.Notifications
 
+  require Logger
+
   # Use one connection to listen to PostgreSQL notifications
   # All the notifications will be sent to the caller process mailbox
   def listen(channel) do
@@ -20,15 +22,14 @@ defmodule EventPiper.Repo do
 
   # Push event stream to a consumer in a single transaction
   def stream_events(subscriber, last_id, consumer) do
-    transaction(
-      fn () -> stream(from e in Event,
-          where: e.subscriber == ^subscriber and e.id > ^last_id,
-          order_by: [asc: :id]
-        )
-        |> Stream.each(consumer)
-        |> Stream.run()
-      end
-    )
+    transaction(fn () ->
+      stream(from e in Event,
+        where: e.subscriber == ^subscriber and e.id > ^last_id,
+        order_by: [asc: :id]
+      )
+      |> Stream.each(consumer)
+      |> Stream.run()
+    end, timeout: 300_000)
   end
 
   # Used for tests only

@@ -5,7 +5,7 @@ defmodule EventPiper.MixProject do
     [
       app: :event_piper,
       version: "0.1.0",
-      elixir: "~> 1.10",
+      elixir: "~> 1.10.3",
       start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
@@ -22,12 +22,12 @@ defmodule EventPiper.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:plug_cowboy, "~> 2.2"},
-      {:pubsub, "~> 1.0"},
-      {:ecto_sql, "~> 3.4"},
-      {:postgrex, "~> 0.15"},
-      {:jason, "~> 1.2"},
-      {:mint, "~> 1.0"}
+      {:plug_cowboy, "~> 2.3.0"},
+      {:pubsub, "~> 1.1.1"},
+      {:ecto_sql, "~> 3.4.4"},
+      {:postgrex, "~> 0.15.5"},
+      {:jason, "~> 1.2.1"},
+      {:mint, "~> 1.1.0"}
     ]
   end
 end
